@@ -6,7 +6,7 @@ body {
 }
 
 /* --- Console Container --- */
-.console {
+console-frame {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@ header {
   box-sizing: border-box;
   gap: 1.5rem;
 
-  .led {
+  red-led {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -177,6 +177,14 @@ main {
   p, li {
     font-size: 1.5rem;
   }
+
+  picture img {
+    border: 4px solid var(--lcd-border, #1e2f24);
+    border-radius: 6px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 /* CRT lines */
@@ -194,14 +202,6 @@ main::after {
   pointer-events: none;
   z-index: 2;
   border-radius: inherit;
-}
-
-main picture img {
-  border: 4px solid var(--lcd-border, #1e2f24);
-  border-radius: 6px;
-  max-width: 100%;
-  height: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 game-review {
@@ -225,7 +225,7 @@ footer {
   justify-content: space-between;
   gap: 2rem;
 
-  .speaker {
+  speaker-grate {
     width: 100px;
     height: 60px;
     background: repeating-linear-gradient(
@@ -238,12 +238,12 @@ footer {
     margin-left: 0.5rem;
   }
 
-  .toggles {
+  button-area {
     display: flex;
     gap: 1.25rem;
   }
 
-  .toggle-btn {
+  toggle-btn {
     width: 50px;
     height: 50px;
     background: radial-gradient(circle at 30% 30%, #666 0%, #333 80%);
@@ -253,7 +253,7 @@ footer {
     transition: all 0.1s ease-in-out;
   }
 
-  .toggle-btn:active {
+  toggle-btn:active {
     transform: translateY(2px);
     box-shadow: 0 1px 0 #111, inset 0 2px 4px rgba(0,0,0,0.5);
     background: radial-gradient(circle at 30% 30%, #555 0%, #222 80%);
@@ -299,7 +299,6 @@ footer {
     padding: 1rem;
   }
 
-  /* Optional: put the nav links somewhere still accessible */
   .console nav {
     display: flex;
     justify-content: center;
