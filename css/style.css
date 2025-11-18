@@ -216,48 +216,74 @@ game-review {
 
 /* ------- Retro LCD Form Inputs ------- */
 
-.contact-form fieldset {
-  border-color: var(--lcd-border, #1e2f24);
-}
+.contact-form {
+  fieldset {
+    border-color: var(--lcd-border, #1e2f24);
+  }
 
-.contact-form legend {
-  font-family: var(--font-main);
-  font-size: 1.2rem;
-  display: block;
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
-  color: var(--lcd-secondary);
-}
+  legend {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--lcd-secondary);
+  }
 
-.contact-form label {
-  font-family: var(--font-main);
-  font-size: 1.2rem;
-  display: block;
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
-  color: var(--lcd-secondary);
-}
+  label {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--lcd-secondary);
+  }
 
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form textarea {
-  width: 90%;
-  max-width: 500px;
-  background: var(--lcd-primary);
-  border: 3px inset var(--lcd-border);
-  color: var(--lcd-secondary);
-  font-family: var(--font-alt);
-  font-size: 1.4rem;
-  padding: 0.6rem;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  text-shadow: 0 0 2px rgba(45, 71, 57, 0.5);
-  border-radius: 4px;
-}
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 90%;
+    max-width: 500px;
+    background: var(--lcd-primary);
+    border: 3px inset var(--lcd-border);
+    color: var(--lcd-secondary);
+    font-family: var(--font-alt);
+    font-size: 1.4rem;
+    padding: 0.6rem;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    text-shadow: 0 0 2px rgba(45, 71, 57, 0.5);
+    border-radius: 4px;
+  }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: 2px solid #2d4739;
-  background: var(--lcd-primary-enhanced);
+  input:focus,
+  textarea:focus {
+    outline: 2px solid #2d4739;
+    background: var(--lcd-primary-enhanced);
+  }
+
+  button[type="submit"] {
+    background: var(--lcd-primary-enhanced);
+    border: 4px outset var(--lcd-border);
+    color: var(--lcd-seconary);
+    font-family: var(--font-main);
+    font-size: 1.4rem;
+    padding: 0.8rem 2rem;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  }
+
+  button:hover {
+    background: var(--lcd-secondary-enhanced);
+    color: var(--lcd-primary);
+  }
+
+  button:active {
+    background: #b4c69a;
+    transform: translateY(1px);
+    border-style: inset;
+  }
 }
 
 /* ------- Radio Buttons Retro Style ------- */
@@ -271,39 +297,13 @@ game-review {
   margin: 0.4rem auto;
   width: fit-content;
   cursor: pointer;
-}
 
-.radio-option input[type="radio"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--lcd-secondary);
-  cursor: pointer;
-}
-
-/* ------- LCD Button ------- */
-
-.contact-form button[type="submit"] {
-  background: var(--lcd-primary-enhanced);
-  border: 4px outset var(--lcd-border);
-  color: var(--lcd-seconary);
-  font-family: var(--font-main);
-  font-size: 1.4rem;
-  padding: 0.8rem 2rem;
-  margin-top: 1.5rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-}
-
-.contact-form button:hover {
-  background: var(--lcd-secondary-enhanced);
-  color: var(--lcd-primary);
-}
-
-.contact-form button:active {
-  background: #b4c69a;
-  transform: translateY(1px);
-  border-style: inset;
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--lcd-secondary);
+    cursor: pointer;
+  }
 }
 
 dialog {
