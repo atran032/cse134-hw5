@@ -1,10 +1,18 @@
 :root {
   /* Classic Game Boy inspired color palette */
   --lcd-light: #c5dca0;
+  --lcd-lighter: #d3e4b7;
   --lcd-dark: #2d4739;
+  --lcd-darker: #22352b;
+
   --lcd-border: #1e2f24;
+  --lcd-primary: var(--lcd-dark);
+  --lcd-primary-enhanced: var(--lcd-darker);
+  --lcd-secondary: var(--lcd-light);
+  --lcd-secondary-enhanced: var(--lcd-lighter);
 
   --console-plastic-core: #cfc8b0;
+  --console-accent: #542118;
 
   /* Typography and layout */
   --font-main: 'Press Start 2P', monospace;

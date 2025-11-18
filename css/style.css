@@ -25,6 +25,8 @@ console-frame {
   50% { box-shadow: 0 0 12px red; }
 }
 
+
+
 /* --- Top Bezel --- */
 header {
   width: 100%;
@@ -53,7 +55,7 @@ header {
   h1 {
     font-family: var(--font-ui);
     font-size: 1.2rem;
-    color: var(--lcd-dark, #2d4739);
+    color: var(--console-accent, #2d4739);
     text-align: center;
     flex: 1;
     letter-spacing: 1px;
@@ -83,7 +85,7 @@ header {
       border-radius: 0;
       border-right: none; /* remove double borders between buttons */
       font-family: var(--font-ui);
-      color: var(--lcd-dark, #2d4739);
+      color: var(--console-accent, #2d4739);
       font-size: 0.75rem;
       text-decoration: none;
       text-transform: uppercase;
@@ -144,10 +146,10 @@ main::before {
   z-index: 1;
 }
 
-main {
+main.screen {
   position: relative;
-  background: var(--lcd-light, #c5dca0);
-  color: var(--lcd-dark, #2d4739);
+  background: var(--lcd-primary, #c5dca0);
+  color: var(--lcd-secondary, #2d4739);
   width: 90%;
   max-width: 800px;
   min-height: 60dvh;
@@ -187,7 +189,7 @@ main {
   }
 }
 
-/* CRT lines */
+/* --- CRT lines --- */
 main::after {
   content: "";
   position: absolute;
@@ -209,6 +211,113 @@ game-review {
   border: 2px solid var(--lcd-border, #1e2f24);
   margin: 10px;
 }
+
+
+
+/* ------- Retro LCD Form Inputs ------- */
+
+.contact-form fieldset {
+  border-color: var(--lcd-border, #1e2f24);
+}
+
+.contact-form legend {
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: var(--lcd-secondary);
+}
+
+.contact-form label {
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: var(--lcd-secondary);
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 90%;
+  max-width: 500px;
+  background: var(--lcd-primary);
+  border: 3px inset var(--lcd-border);
+  color: var(--lcd-secondary);
+  font-family: var(--font-alt);
+  font-size: 1.4rem;
+  padding: 0.6rem;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  text-shadow: 0 0 2px rgba(45, 71, 57, 0.5);
+  border-radius: 4px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid #2d4739;
+  background: var(--lcd-primary-enhanced);
+}
+
+/* ------- Radio Buttons Retro Style ------- */
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-ui);
+  font-size: 1.3rem;
+  margin: 0.4rem auto;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--lcd-secondary);
+  cursor: pointer;
+}
+
+/* ------- LCD Button ------- */
+
+.contact-form button[type="submit"] {
+  background: var(--lcd-primary-enhanced);
+  border: 4px outset var(--lcd-border);
+  color: var(--lcd-seconary);
+  font-family: var(--font-main);
+  font-size: 1.4rem;
+  padding: 0.8rem 2rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+}
+
+.contact-form button:hover {
+  background: var(--lcd-secondary-enhanced);
+  color: var(--lcd-primary);
+}
+
+.contact-form button:active {
+  background: #b4c69a;
+  transform: translateY(1px);
+  border-style: inset;
+}
+
+dialog {
+    background: var(--lcd-primary);
+    border: 4px inset var(--lcd-border);
+    padding: 1.5rem;
+    border-radius: 6px;
+    color: var(--lcd-secondary);
+    font-family: var(--font-alt);
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
+    max-width: 500px;
+    margin: 2rem auto;
+    font-size: 1.3rem;
+  }
 
 
 
@@ -246,23 +355,23 @@ footer {
   toggle-btn {
     width: 50px;
     height: 50px;
-    background: radial-gradient(circle at 30% 30%, #666 0%, #333 80%);
+    background: radial-gradient(circle at 30% 30%, #a74363 0%, #752238 80%);
     border-radius: 50%;
-    box-shadow: 0 3px 0 #111, inset 0 -2px 4px rgba(255,255,255,0.2);
+    box-shadow: 0 3px 0 #53101f, inset 0 -2px 4px rgba(255,255,255,0.2);
     cursor: pointer;
     transition: all 0.1s ease-in-out;
   }
 
   toggle-btn:active {
     transform: translateY(2px);
-    box-shadow: 0 1px 0 #111, inset 0 2px 4px rgba(0,0,0,0.5);
-    background: radial-gradient(circle at 30% 30%, #555 0%, #222 80%);
+    box-shadow: 0 1px 0 #420d19, inset 0 2px 4px rgba(0,0,0,0.5);
+    background: radial-gradient(circle at 30% 30%, #86364f 0%, #5e1b2d 80%);
   }
 
   p {
     font-family: var(--font-ui);
     font-size: 0.8rem;
-    color: var(--lcd-dark, #2d4739);
+    color: var(--console-accent, #2d4739);
     margin: 0 0.5rem 0 auto;
   }
 }
@@ -272,7 +381,7 @@ footer {
 /* --- Minimal LCD mode for small screens --- */
 @media (max-width: 600px) {
   body {
-    background: var(--lcd-light, #c5dca0); /* Match the screen color */
+    background: var(--lcd-primary, #c5dca0); /* Match the screen color */
     margin: 0;
   }
 
@@ -302,7 +411,7 @@ footer {
   .console nav {
     display: flex;
     justify-content: center;
-    background: var(--lcd-dark, #2d4739);
+    background: var(--lcd-secondary, #2d4739);
     padding: 0.5rem;
   }
 
@@ -316,9 +425,9 @@ footer {
   }
 
   .console nav a {
-    background: var(--lcd-light, #c5dca0);
-    border: 2px solid var(--lcd-dark, #2d4739);
-    color: var(--lcd-dark, #2d4739);
+    background: var(--lcd-primary, #c5dca0);
+    border: 2px solid var(--lcd-secondary, #2d4739);
+    color: var(--lcd-secondary, #2d4739);
     text-decoration: none;
     font-family: var(--font-ui);
     font-size: 0.9rem;
