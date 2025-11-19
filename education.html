@@ -71,12 +71,18 @@
     </main>
 
     <footer class="console-bottom">
+      <d-pad>
+        <div class="center"></div>
+      </d-pad>
+
       <speaker-grate></speaker-grate>
-      <button-area>
-        <toggle-btn id="theme-toggle"></toggle-btn>
-        <toggle-btn></toggle-btn>
-      </button-area>
-      <p><a href="index.html">Back to Home</a></p>
+
+      <ab-cluster>
+        <toggle-btn id="theme-toggle" class="btn-a"></toggle-btn>
+        <toggle-btn class="btn-b"></toggle-btn>
+      </ab-cluster>
+
+      <p class="home-link"><a href="index.html">Back to Home</a></p>
     </footer>
   </console-frame>
   <script src="js/script.js" defer></script>

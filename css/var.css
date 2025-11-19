@@ -6,10 +6,10 @@
   --lcd-darker: #22352b;
 
   --lcd-border: #1e2f24;
-  --lcd-primary: var(--lcd-dark);
-  --lcd-primary-enhanced: var(--lcd-darker);
-  --lcd-secondary: var(--lcd-light);
-  --lcd-secondary-enhanced: var(--lcd-lighter);
+  --lcd-primary: var(--lcd-light);
+  --lcd-primary-enhanced: var(--lcd-lighter);
+  --lcd-secondary: var(--lcd-dark);
+  --lcd-secondary-enhanced: var(--lcd-darker);
 
   --console-plastic-core: #cfc8b0;
   --console-accent: #542118;
@@ -23,8 +23,8 @@
 
 /* Dark Theme (inverted Game Boy) */
 html[data-theme="dark"] {
-  --lcd-primary: var(--lcd-light);
-  --lcd-primary-enhanced: var(--lcd-lighter);
-  --lcd-secondary: var(--lcd-dark);
-  --lcd-secondary-enhanced: var(--lcd-darker);
+  --lcd-primary: var(--lcd-dark);
+  --lcd-primary-enhanced: var(--lcd-darker);
+  --lcd-secondary: var(--lcd-light);
+  --lcd-secondary-enhanced: var(--lcd-lighter);
 }

@@ -377,38 +377,112 @@ dialog {
 
 /* --- Bottom Bezel --- */
 footer {
+  padding: 2rem 4rem;
   width: 100%;
   background: linear-gradient(to top, #d9d2be 0%, #bdb49f 100%);
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 1.25rem 2.5rem;
-  display: flex;
+  padding: 2rem 3rem;
+
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "dpad speaker ab"
+    ".    .       home";
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  justify-content: center;
+  gap: 3rem;
+
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  d-pad {
+    --dpad-size: 160px;
+    grid-area: dpad;
+    margin-left: 3.5rem;
+    width: var(--dpad-size);
+    height: var(--dpad-size);
+    position: relative;
+    display: inline-block;
+
+    background: radial-gradient(circle at 35% 30%, #555 0%, #2b2b2b 80%);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 4px 6px rgba(255, 255, 255, 0.08),
+      inset 0 -6px 8px rgba(0, 0, 0, 0.4),
+      0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  d-pad::before,
+  d-pad::after {
+    content: "";
+    position: absolute;
+    background: #3a3a3a;
+    border-radius: 6px;
+    box-shadow:
+      inset 0 3px 4px rgba(255, 255, 255, 0.06),
+      inset 0 -3px 4px rgba(0, 0, 0, 0.4),
+      0 3px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Vertical bar */
+  d-pad::before {
+    width: 28%;
+    height: 72%;
+    top: 14%;
+    left: 36%;
+  }
+
+  /* Horizontal bar */
+  d-pad::after {
+    width: 72%;
+    height: 28%;
+    top: 36%;
+    left: 14%;
+  }
+
+  /* Optional: Add a tiny circular center nub */
+  d-pad > .center {
+    position: absolute;
+    width: 24%;
+    height: 24%;
+    top: 38%;
+    left: 38%;
+    background: radial-gradient(circle, #444 0%, #1a1a1a 80%);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 2px 4px rgba(255, 255, 255, 0.07),
+      inset 0 -3px 5px rgba(0, 0, 0, 0.45);
+  }
+
 
   speaker-grate {
-    width: 100px;
-    height: 60px;
+    width: 140px;
+    height: 70px;
     background: repeating-linear-gradient(
       45deg,
       #444 0 2px,
       transparent 2px 4px
     );
     opacity: 0.5;
-    border-radius: 8px;
-    margin-left: 0.5rem;
+    border-radius: 10px;
+    grid-area: speaker;
+    justify-self: center;
+    transform: translateX(12px);
   }
 
-  button-area {
+  ab-cluster {
+    grid-area: ab;
     display: flex;
-    gap: 1.25rem;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 140px;
   }
 
   toggle-btn {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background: radial-gradient(circle at 30% 30%, #a74363 0%, #752238 80%);
     border-radius: 50%;
     box-shadow: 0 3px 0 #53101f, inset 0 -2px 4px rgba(255,255,255,0.2);
@@ -417,16 +491,33 @@ footer {
   }
 
   toggle-btn:active {
-    transform: translateY(2px);
     box-shadow: 0 1px 0 #420d19, inset 0 2px 4px rgba(0,0,0,0.5);
     background: radial-gradient(circle at 30% 30%, #86364f 0%, #5e1b2d 80%);
   }
+
+  .btn-a {
+    transform: translate(40px, 20px); /* move right + slightly up */
+  }
+
+  .btn-b {
+    transform: translate(-40px, 20px); /* move left + slightly down */
+  }
+
+  .btn-a:active {
+    transform: translate(40px, 25px);
+  }
+
+  .btn-b:active {
+    transform: translate(-40px, 25px);
+  }
+
 
   p {
     font-family: var(--font-ui);
     font-size: 0.8rem;
     color: var(--console-accent, #2d4739);
-    margin: 0 0.5rem 0 auto;
+    grid-area: home;
+    justify-self: center;
   }
 }
 
