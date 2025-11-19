@@ -201,19 +201,35 @@ main.screen {
   }
 }
 
+
+/* Transitions */
 .screen {
-  view-transition-name: lcd-screen;
+  view-transition-name: lcd;
 }
 
-/* Fading out old screen */
-::view-transition-old(lcd-screen) {
-  animation: fade-out 0.35s ease forwards;
+@view-transition {
+  navigation: auto;
 }
 
-/* Fading in new screen */
-::view-transition-new(lcd-screen) {
-  animation: fade-in 0.35s ease forwards;
+::view-transition-old(lcd) {
+  animation: fade-out 0.7s ease forwards;
 }
+
+::view-transition-new(lcd) {
+  animation: fade-in 0.7s ease forwards;
+}
+
+@keyframes fade-out {
+  from { opacity: 1 }
+  to   { opacity: 0 }
+}
+
+@keyframes fade-in {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+
 
 /* --- CRT lines --- */
 main::after {
@@ -240,7 +256,7 @@ game-review {
 
 
 
-/* ------- Retro LCD Form Inputs ------- */
+/* ------- Form Styling ------- */
 
 .contact-form {
   fieldset {
@@ -311,8 +327,6 @@ game-review {
     border-style: inset;
   }
 }
-
-/* ------- Radio Buttons Retro Style ------- */
 
 .radio-option {
   display: flex;
