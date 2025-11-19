@@ -175,17 +175,6 @@ main.screen {
   overflow-y: auto;
   font-family: var(--font-alt);
   font-size: var(--font-size-base);
-  view-transition-name: lcd-screen;
-
-  /* Fading out old screen */
-  ::view-transition-old(lcd-screen) {
-    animation: fade-out 0.35s ease forwards;
-  }
-
-  /* Fading in new screen */
-  ::view-transition-new(lcd-screen) {
-    animation: fade-in 0.35s ease forwards;
-  }
 
   h1 {
     font-size: 5rem;
@@ -210,6 +199,20 @@ main.screen {
     height: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
+}
+
+.screen {
+  view-transition-name: lcd-screen;
+}
+
+/* Fading out old screen */
+::view-transition-old(lcd-screen) {
+  animation: fade-out 0.35s ease forwards;
+}
+
+/* Fading in new screen */
+::view-transition-new(lcd-screen) {
+  animation: fade-in 0.35s ease forwards;
 }
 
 /* --- CRT lines --- */

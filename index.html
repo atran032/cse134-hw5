@@ -6,6 +6,14 @@
   <meta name="description" content="Portfolio website for Your Name">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anthony's Portfolio | Home</title>
+  <script>
+    (function() {
+      let saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
