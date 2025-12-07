@@ -178,3 +178,153 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+
+
+
+//  CUSTOM ELEMENT: <game-card>
+class GameCard extends HTMLElement {
+  constructor() {
+    super();
+
+    // Shadow DOM helps card look consistent everywhere
+    const shadow = this.attachShadow({ mode: "open" });
+
+    // Template for the card
+    shadow.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          background: var(--lcd-secondary);
+          border: 3px solid var(--lcd-border);
+          border-radius: 12px;
+          padding: 1rem;
+          margin: 1.5rem 0;
+          font-family: var(--font-main);
+          color: var(--lcd-primary);
+        }
+
+        h2 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.1rem;
+          text-transform: uppercase;
+        }
+
+        picture, img {
+          width: 100%;
+          border-radius: 8px;
+          margin-bottom: 0.75rem;
+        }
+
+        .meta {
+          font-family: var(--font-alt);
+          font-size: 0.85rem;
+          margin-bottom: 0.75rem;
+        }
+
+        p {
+          line-height: 1.5;
+          margin-bottom: 0.75rem;
+        }
+
+        a {
+          color: var(--lcd-primary);
+          text-decoration: underline;
+          font-family: var(--font-ui);
+        }
+      </style>
+
+      <h2></h2>
+      <picture>
+        <img>
+      </picture>
+      <p class="meta"></p>
+      <p class="desc"></p>
+      <p class="rating"></p>
+      <a class="more" target="_blank">Read more</a>
+    `;
+  }
+
+  static get observedAttributes() {
+    return ["title", "img", "alt", "genre", "desc", "rating", "link"];
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    const root = this.shadowRoot;
+
+    switch (name) {
+      case "title":
+        root.querySelector("h2").textContent = newVal;
+        break;
+      case "img":
+        root.querySelector("img").src = newVal;
+        break;
+      case "alt":
+        root.querySelector("img").alt = newVal;
+        break;
+      case "genre":
+        root.querySelector(".meta").innerHTML = `<strong>Genre:</strong> ${newVal}`;
+        break;
+      case "desc":
+        root.querySelector(".desc").textContent = newVal;
+        break;
+      case "rating":
+        root.querySelector(".rating").innerHTML = `<strong>Rating:</strong> ${newVal}`;
+        break;
+      case "link":
+        root.querySelector(".more").href = newVal;
+        break;
+    }
+  }
+}
+
+customElements.define("game-card", GameCard);
+
+
+
+//  Hardcoded game cards
+const gameData = [
+  {
+    title: "Kingdom Come: Deliverance II",
+    img: "images/kcd2.jpg",
+    alt: "Henry riding a horse through medieval Bohemia.",
+    genre: "Action RPG",
+    desc: "Immersive historical RPG set in 1403 Bohemia. A masterful blend of realism and narrative-driven storytelling.",
+    rating: "★★★★★",
+    link: "https://www.kingdomcomerpg.com/"
+  },
+  {
+    title: "Cyberpunk 2077",
+    img: "images/cp2077.jpg",
+    alt: "V looking over Night City at sunset.",
+    genre: "Action RPG",
+    desc: "A dystopian open-world adventure with strong gameplay, emotional storytelling, and breathtaking worldbuilding.",
+    rating: "★★★★★",
+    link: "https://www.cyberpunk.net/"
+  },
+  {
+    title: "Darkest Dungeon",
+    img: "images/darkest.jpg",
+    alt: "Crusader and party fighting eldritch horrors.",
+    genre: "Roguelike RPG",
+    desc: "A gothic turn-based descent into madness with brutal difficulty and near-infinite replayability.",
+    rating: "★★★★☆",
+    link: "https://www.darkestdungeon.com/"
+  }
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector("#game-card-list");
+
+  gameData.forEach(g => {
+    const card = document.createElement("game-card");
+    card.setAttribute("title", g.title);
+    card.setAttribute("img", g.img);
+    card.setAttribute("alt", g.alt);
+    card.setAttribute("genre", g.genre);
+    card.setAttribute("desc", g.desc);
+    card.setAttribute("rating", g.rating);
+    card.setAttribute("link", g.link);
+    container.appendChild(card);
+  });
+});
