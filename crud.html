@@ -26,13 +26,56 @@
           <li><a href="education.html">Career</a></li>
           <li><a href="hobbies.html">Hobbies</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="crud.html" class="active">CRUD</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </header>
 
-    <main class="screen crud-screen">
+    <main class="screen">
+
+    <section id="crud-section">
+        <h2>Custom Game List</h2>
+        <p>Test the CRUD functions here. Start by adding some entries of your choice. To edit, create a new entry with the same name as an existing one. It will replace it. To delete, hit the button below any entry.</p>
+
+        <!-- Create / Update Form -->
+        <form id="gameForm">
+        <input type="hidden" id="editIndex">
+
+        <label>
+            Game Title:
+            <input type="text" id="title" required>
+        </label>
+
+        <label>
+            Genre:
+            <input type="text" id="genre" required>
+        </label>
+
+        <label>
+            Description:
+            <textarea id="desc" required></textarea>
+        </label>
+
+        <label>
+            Rating:
+            <input type="text" id="rating" placeholder="★★★★★ or 4/5, etc.">
+        </label>
+
+        <label>
+            External Link:
+            <input type="url" id="link" required>
+        </label>
+
+        <button type="submit" id="saveBtn">Save Entry</button>
+        <button type="button" id="cancelEdit" style="display:none;">Cancel Edit</button>
+        </form>
+
+        <!-- Display Saved Entries -->
+        <h3>Your Custom Entries</h3>
+        <game-card-list id="custom-list"></game-card-list>
+
+    </section>
+
     </main>
 
     <footer class="console-bottom">

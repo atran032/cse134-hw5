@@ -303,3 +303,137 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+
+/* ------------------------------
+   CUSTOM CRUD GAME LIST
+--------------------------------*/
+
+// Ensure storage exists
+if (!localStorage.getItem("gameDataCustom")) {
+  localStorage.setItem("gameDataCustom", JSON.stringify([]));
+}
+
+// Load custom list into UI
+function loadCustomList() {
+  const list = JSON.parse(localStorage.getItem("gameDataCustom"));
+  populateCustomList(list);
+}
+
+function populateCustomList(dataArray) {
+  const container = document.querySelector("#custom-list");
+  container.innerHTML = "";
+
+  dataArray.forEach((g, index) => {
+    const card = document.createElement("game-card");
+
+    for (const key in g) {
+      card.setAttribute(key, g[key]);
+    }
+
+    // Add edit/delete controls
+    const controls = document.createElement("div");
+    controls.innerHTML = `
+      <button class="editBtn" data-index="${index}">Edit</button>
+      <button class="deleteBtn" data-index="${index}">Delete</button>
+    `;
+    controls.style.marginTop = "0.5rem";
+
+    const shadow = card.shadowRoot;
+    shadow.appendChild(controls);
+
+    container.appendChild(card);
+  });
+}
+
+
+// Setup CRUD form events when DOM loads
+document.addEventListener("DOMContentLoaded", () => {
+
+  const form = document.querySelector("#gameForm");
+  if (!form) return;   // Prevent running on hobbies.html
+
+  const title = document.querySelector("#title");
+  const genre = document.querySelector("#genre");
+  const desc = document.querySelector("#desc");
+  const rating = document.querySelector("#rating");
+  const link = document.querySelector("#link");
+  const editIndexField = document.querySelector("#editIndex");
+  const cancelEdit = document.querySelector("#cancelEdit");
+
+  loadCustomList();
+
+  // Save (Create or Update)
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const data = {
+      title: title.value,
+      genre: genre.value,
+      desc: desc.value,
+      rating: rating.value,
+      link: link.value,
+      img: "images/default.jpg", // placeholder
+      alt: title.value
+    };
+
+    const list = JSON.parse(localStorage.getItem("gameDataCustom"));
+
+    // Editing existing
+    if (editIndexField.value !== "") {
+      const index = parseInt(editIndexField.value);
+      list[index] = data;
+    } 
+    // Creating new
+    else {
+      list.push(data);
+    }
+
+    localStorage.setItem("gameDataCustom", JSON.stringify(list));
+
+    form.reset();
+    editIndexField.value = "";
+    cancelEdit.style.display = "none";
+
+    loadCustomList();
+  });
+
+
+  // Handle Edit/Delete clicks
+  document.addEventListener("click", e => {
+    // Edit
+    if (e.target.classList.contains("editBtn")) {
+      const index = e.target.dataset.index;
+      const list = JSON.parse(localStorage.getItem("gameDataCustom"));
+      const item = list[index];
+
+      title.value = item.title;
+      genre.value = item.genre;
+      desc.value = item.desc;
+      rating.value = item.rating;
+      link.value = item.link;
+
+      editIndexField.value = index;
+      cancelEdit.style.display = "inline-block";
+    }
+
+    // Delete
+    if (e.target.classList.contains("deleteBtn")) {
+      const index = e.target.dataset.index;
+      const list = JSON.parse(localStorage.getItem("gameDataCustom"));
+
+      list.splice(index, 1);
+      localStorage.setItem("gameDataCustom", JSON.stringify(list));
+      loadCustomList();
+    }
+  });
+
+  // Cancel Edit
+  cancelEdit.addEventListener("click", () => {
+    document.querySelector("#gameForm").reset();
+    editIndexField.value = "";
+    cancelEdit.style.display = "none";
+  });
+
+});
