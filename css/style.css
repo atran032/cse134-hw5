@@ -283,7 +283,7 @@ main::after {
 
 /* ------- Form Styling ------- */
 
-.contact-form {
+.contact-form, .game-form {
   fieldset {
     border-color: var(--lcd-border, #1e2f24);
   }

@@ -191,27 +191,41 @@ class GameCard extends HTMLElement {
       <style>
         :host {
           display: block;
-          background: var(--lcd-secondary);
-          border: 3px solid var(--lcd-border);
+          background: var(--lcd-secondary, #e9f2d8);
+          border: 3px solid var(--lcd-border, #1e2f24);
           border-radius: 12px;
           padding: 1rem;
-          margin: 1.5rem 0;
-          font-family: var(--font-main);
-          color: var(--lcd-primary);
+          margin: 1.2rem 0;
+          font-family: var(--font-main, monospace);
+          color: var(--lcd-primary, #2d4739);
         }
         h2 { margin: 0 0 0.5rem; font-size: 1.1rem; text-transform: uppercase; }
-        picture, img { width: 100%; border-radius: 8px; margin-bottom: 0.75rem; }
-        .meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
-        p { line-height: 1.5; margin-bottom: 0.75rem; }
-        a { color: var(--lcd-primary); text-decoration: underline; }
+        picture, img { width: 100%; border-radius: 8px; margin-bottom: 0.75rem; display:block; }
+        .meta { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--lcd-primary); }
+        .desc { line-height: 1.4; margin-bottom: 0.75rem; color: var(--lcd-primary); }
+        .rating { font-weight: bold; margin-bottom: 0.75rem; }
+        a.more { color: var(--lcd-primary); text-decoration: underline; }
+        .controls { margin-top: 0.5rem; display:flex; gap:0.5rem; justify-content:flex-end; }
+        .controls button {
+          background: var(--lcd-secondary-enhanced);
+          color: var(--lcd-primary)
+          border: 2px solid var(--lcd-border);
+          padding: 0.35rem 0.6rem;
+          font-family: var(--font-ui, sans-serif);
+          cursor: pointer;
+          border-radius: 4px;
+        }
       </style>
 
       <h2></h2>
-      <picture><img></picture>
+      <picture><img alt=""></picture>
       <p class="meta"></p>
       <p class="desc"></p>
       <p class="rating"></p>
-      <a class="more" target="_blank">Read more</a>
+      <a class="more" target="_blank" rel="noopener">Read more</a>
+
+      <!-- Controls container is inside the shadow DOM so it renders -->
+      <div class="controls" part="controls"></div>
     `;
   }
 
@@ -222,18 +236,27 @@ class GameCard extends HTMLElement {
   attributeChangedCallback(name, oldVal, newVal) {
     const root = this.shadowRoot;
     switch (name) {
-      case "title": root.querySelector("h2").textContent = newVal; break;
-      case "img": root.querySelector("img").src = newVal; break;
-      case "alt": root.querySelector("img").alt = newVal; break;
+      case "title":
+        root.querySelector("h2").textContent = newVal || "";
+        break;
+      case "img":
+        root.querySelector("img").src = newVal || "";
+        break;
+      case "alt":
+        root.querySelector("img").alt = newVal || "";
+        break;
       case "genre":
-        root.querySelector(".meta").innerHTML = `<strong>Genre:</strong> ${newVal}`;
+        root.querySelector(".meta").innerHTML = `<strong>Genre:</strong> ${newVal || ""}`;
         break;
-      case "desc": root.querySelector(".desc").textContent = newVal; break;
+      case "desc":
+        root.querySelector(".desc").textContent = newVal || "";
+        break;
       case "rating":
-        root.querySelector(".rating").innerHTML = newVal ?
-          `<strong>Rating:</strong> ${newVal}` : "";
+        root.querySelector(".rating").innerHTML = newVal ? `<strong>Rating:</strong> ${newVal}` : "";
         break;
-      case "link": root.querySelector(".more").href = newVal; break;
+      case "link":
+        root.querySelector(".more").href = newVal || "#";
+        break;
     }
   }
 }
@@ -306,10 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-/* ------------------------------
-   CUSTOM CRUD GAME LIST
---------------------------------*/
-
+// Custom CRUD
 // Ensure storage exists
 if (!localStorage.getItem("gameDataCustom")) {
   localStorage.setItem("gameDataCustom", JSON.stringify([]));
@@ -328,20 +348,25 @@ function populateCustomList(dataArray) {
   dataArray.forEach((g, index) => {
     const card = document.createElement("game-card");
 
+    // set attributes that game-card expects
     for (const key in g) {
       card.setAttribute(key, g[key]);
     }
 
-    // Add edit/delete controls
-    const controls = document.createElement("div");
-    controls.innerHTML = `
-      <button class="editBtn" data-index="${index}">Edit</button>
-      <button class="deleteBtn" data-index="${index}">Delete</button>
-    `;
-    controls.style.marginTop = "0.5rem";
+    // Create control buttons (in the outer JS context)
+    const editBtnHtml = `<button class="editBtn" data-index="${index}">Edit</button>`;
+    const deleteBtnHtml = `<button class="deleteBtn" data-index="${index}">Delete</button>`;
 
-    const shadow = card.shadowRoot;
-    shadow.appendChild(controls);
+    // Write them into the card's shadow .controls container
+    const controlsContainer = card.shadowRoot.querySelector(".controls");
+    if (controlsContainer) {
+      controlsContainer.innerHTML = editBtnHtml + deleteBtnHtml;
+    } else {
+      // fallback: append to light DOM (only happens if shadow isn't found)
+      const fallback = document.createElement("div");
+      fallback.innerHTML = editBtnHtml + deleteBtnHtml;
+      card.appendChild(fallback);
+    }
 
     container.appendChild(card);
   });
@@ -401,39 +426,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // Handle Edit/Delete clicks
-  document.addEventListener("click", e => {
-    // Edit
-    if (e.target.classList.contains("editBtn")) {
-      const index = e.target.dataset.index;
-      const list = JSON.parse(localStorage.getItem("gameDataCustom"));
-      const item = list[index];
+  document.addEventListener("click", (e) => {
+    const path = e.composedPath();
 
-      title.value = item.title;
-      genre.value = item.genre;
-      desc.value = item.desc;
-      rating.value = item.rating;
-      link.value = item.link;
+    const editBtn = path.find(el => el.classList && el.classList.contains("editBtn"));
+    const deleteBtn = path.find(el => el.classList && el.classList.contains("deleteBtn"));
 
-      editIndexField.value = index;
-      cancelEdit.style.display = "inline-block";
+    if (editBtn) {
+      const index = parseInt(editBtn.dataset.index, 10);
+      handleEdit(index);
+      return;
     }
 
-    // Delete
-    if (e.target.classList.contains("deleteBtn")) {
-      const index = e.target.dataset.index;
-      const list = JSON.parse(localStorage.getItem("gameDataCustom"));
-
-      list.splice(index, 1);
-      localStorage.setItem("gameDataCustom", JSON.stringify(list));
-      loadCustomList();
+    if (deleteBtn) {
+      const index = parseInt(deleteBtn.dataset.index, 10);
+      handleDelete(index);
+      return;
     }
-  });
-
-  // Cancel Edit
-  cancelEdit.addEventListener("click", () => {
-    document.querySelector("#gameForm").reset();
-    editIndexField.value = "";
-    cancelEdit.style.display = "none";
   });
 
 });
+
+function handleEdit(index) {
+  const list = JSON.parse(localStorage.getItem("gameDataCustom") || "[]");
+  const item = list[index];
+  if (!item) return;
+
+  document.querySelector("#title").value = item.title || "";
+  document.querySelector("#genre").value = item.genre || "";
+  document.querySelector("#desc").value = item.desc || "";
+  document.querySelector("#rating").value = item.rating || "";
+  document.querySelector("#link").value = item.link || "";
+  document.querySelector("#editIndex").value = index;
+  document.querySelector("#cancelEdit").style.display = "inline-block";
+}
+
+function handleDelete(index) {
+  if (!confirm("Delete this item?")) return;
+  const list = JSON.parse(localStorage.getItem("gameDataCustom") || "[]");
+  list.splice(index, 1);
+  localStorage.setItem("gameDataCustom", JSON.stringify(list));
+  loadCustomList(); // re-render
+}

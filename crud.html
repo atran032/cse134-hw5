@@ -35,36 +35,42 @@
 
     <section id="crud-section">
         <h2>Custom Game List</h2>
-        <p>Test the CRUD functions here. Start by adding some entries of your choice. To edit, create a new entry with the same name as an existing one. It will replace it. To delete, hit the button below any entry.</p>
+        <p>Test the CRUD functions here. First, fill in these fields and create a few example entries. When you hit Edit on an entry, then the fields will populate again, allowing you to save any edits. To delete, simply hit the button and confirm.</p>
 
         <!-- Create / Update Form -->
-        <form id="gameForm">
+        <form id="gameForm" class="game-form">
         <input type="hidden" id="editIndex">
 
-        <label>
+        <fieldset>
+        <legend>Game Information</legend>
+        <label for="title">
             Game Title:
             <input type="text" id="title" required>
         </label>
 
-        <label>
+        <label for="genre">
             Genre:
             <input type="text" id="genre" required>
-        </label>
-
-        <label>
-            Description:
-            <textarea id="desc" required></textarea>
-        </label>
-
-        <label>
-            Rating:
-            <input type="text" id="rating" placeholder="★★★★★ or 4/5, etc.">
         </label>
 
         <label>
             External Link:
             <input type="url" id="link" required>
         </label>
+        </fieldset>
+
+        <fieldset>
+        <legend>Player Evaluation</legend>
+        <label for="desc">
+            Description:
+            <textarea id="desc" required></textarea>
+        </label>
+
+        <label for="rating">
+            Rating:
+            <input type="text" id="rating" placeholder="Paste stars i.e. ★★★★★ or type 4/5, etc.">
+        </label>
+        </fieldset>
 
         <button type="submit" id="saveBtn">Save Entry</button>
         <button type="button" id="cancelEdit" style="display:none;">Cancel Edit</button>
@@ -93,6 +99,5 @@
   </console-frame>
   
   <script src="js/script.js" defer></script>
-  <script src="js/crud.js" defer></script>
 </body>
 </html>
