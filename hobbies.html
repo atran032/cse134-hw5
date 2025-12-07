@@ -30,7 +30,7 @@
     </header>
 
     <main class="screen">
-      <section>
+      <section id="hobbies">
         <h1>Hobbies & Interests</h1>
         <h2>Fencing</h2>
         <p>I'm an amateur fencer. More specifically, I practice <em>HEMA</em>, which stands for Historical European Martial Arts. Currently, I'm studying the German longsword tradition as laid down by historic masters, including Johannes Liechtenauer and Joachim Meyer. I'm also dabbling in Napoleonic saber based on texts by British duelist Charles Roworth. My primary goal is to become tournament-ready by the end of the year.
@@ -51,16 +51,20 @@
           <li><a href="https://www.allrecipes.com/recipe/10025/white-chocolate-macadamia-nut-cookies-iii/" target="_blank">White Chocolate Macadamia Nut Cookies</a></li>
         </ol>
         <p>Even if you're not experienced, these are some great recipes to get started like I did. If baking interests you, grab a friend and give it a shot!</p>
-        <h2>Video Gaming</h2>
-        <p>I enjoy a variety of video games, including role-playing, open-world, turn-based, strategy, and roguelike games. Here are a selection of games I absolutely recommend.</p>
       </section>
         
-      <section>
-        <h2>Game Reviews</h2>
-        <div id="game-card-list"></div>
+      <section id="game-reviews">
+        <h2>Video Gaming</h2>
+        <p>I enjoy a variety of video games, including role-playing, open-world, turn-based, strategy, and roguelike games. Here are a selection of games I absolutely recommend.</p>
+        <loader-buttons class="loader-buttons">
+          <button id="loadLocal">Load Local</button>
+          <button id="loadRemote">Load Remote</button>
+        </loader-buttons>
+
+        <game-card-list id="game-card-list"></game-card-list>
       </section>
 
-      <section>
+      <section id="goals">
         <h2>Goals</h2>
         <p>I'm always dipping my fingers in something new, learning new skills and flexing my creative muscles. Right now, I'm dabbling in <em>creative writing</em> and tapping into my love of <em>history</em> to create an exciting project. As of right now, It's in its early stages, but there will be updates to come.</p>
         <progress value="15" max="100"></progress>

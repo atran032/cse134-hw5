@@ -201,6 +201,37 @@ main.screen {
   }
 }
 
+loader-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  button {
+    background: var(--lcd-primary-enhanced);
+    border: 4px outset var(--lcd-border);
+    color: var(--lcd-seconary);
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    padding: 0.8rem 2rem;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  }
+
+  button:hover {
+    background: var(--lcd-secondary-enhanced);
+    color: var(--lcd-primary);
+  }
+
+  button:active {
+    background: #b4c69a;
+    transform: translateY(1px);
+    border-style: inset;
+  }
+}
+
 
 /* Transitions */
 .screen {
@@ -246,12 +277,6 @@ main::after {
   pointer-events: none;
   z-index: 2;
   border-radius: inherit;
-}
-
-game-review {
-  display: block;
-  border: 2px solid var(--lcd-border, #1e2f24);
-  margin: 10px;
 }
 
 

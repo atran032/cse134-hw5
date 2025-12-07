@@ -182,15 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-//  CUSTOM ELEMENT: <game-card>
+// Game Card Custom Element
 class GameCard extends HTMLElement {
   constructor() {
     super();
-
-    // Shadow DOM helps card look consistent everywhere
     const shadow = this.attachShadow({ mode: "open" });
-
-    // Template for the card
     shadow.innerHTML = `
       <style>
         :host {
@@ -203,41 +199,15 @@ class GameCard extends HTMLElement {
           font-family: var(--font-main);
           color: var(--lcd-primary);
         }
-
-        h2 {
-          margin: 0 0 0.5rem 0;
-          font-size: 1.1rem;
-          text-transform: uppercase;
-        }
-
-        picture, img {
-          width: 100%;
-          border-radius: 8px;
-          margin-bottom: 0.75rem;
-        }
-
-        .meta {
-          font-family: var(--font-alt);
-          font-size: 0.85rem;
-          margin-bottom: 0.75rem;
-        }
-
-        p {
-          line-height: 1.5;
-          margin-bottom: 0.75rem;
-        }
-
-        a {
-          color: var(--lcd-primary);
-          text-decoration: underline;
-          font-family: var(--font-ui);
-        }
+        h2 { margin: 0 0 0.5rem; font-size: 1.1rem; text-transform: uppercase; }
+        picture, img { width: 100%; border-radius: 8px; margin-bottom: 0.75rem; }
+        .meta { font-size: 0.85rem; margin-bottom: 0.75rem; }
+        p { line-height: 1.5; margin-bottom: 0.75rem; }
+        a { color: var(--lcd-primary); text-decoration: underline; }
       </style>
 
       <h2></h2>
-      <picture>
-        <img>
-      </picture>
+      <picture><img></picture>
       <p class="meta"></p>
       <p class="desc"></p>
       <p class="rating"></p>
@@ -251,29 +221,19 @@ class GameCard extends HTMLElement {
 
   attributeChangedCallback(name, oldVal, newVal) {
     const root = this.shadowRoot;
-
     switch (name) {
-      case "title":
-        root.querySelector("h2").textContent = newVal;
-        break;
-      case "img":
-        root.querySelector("img").src = newVal;
-        break;
-      case "alt":
-        root.querySelector("img").alt = newVal;
-        break;
+      case "title": root.querySelector("h2").textContent = newVal; break;
+      case "img": root.querySelector("img").src = newVal; break;
+      case "alt": root.querySelector("img").alt = newVal; break;
       case "genre":
         root.querySelector(".meta").innerHTML = `<strong>Genre:</strong> ${newVal}`;
         break;
-      case "desc":
-        root.querySelector(".desc").textContent = newVal;
-        break;
+      case "desc": root.querySelector(".desc").textContent = newVal; break;
       case "rating":
-        root.querySelector(".rating").innerHTML = `<strong>Rating:</strong> ${newVal}`;
+        root.querySelector(".rating").innerHTML = newVal ?
+          `<strong>Rating:</strong> ${newVal}` : "";
         break;
-      case "link":
-        root.querySelector(".more").href = newVal;
-        break;
+      case "link": root.querySelector(".more").href = newVal; break;
     }
   }
 }
@@ -281,9 +241,23 @@ class GameCard extends HTMLElement {
 customElements.define("game-card", GameCard);
 
 
+// Populator
+function populateCards(dataArray) {
+  const container = document.querySelector("#game-card-list");
+  container.innerHTML = ""; // Clear existing
 
-//  Hardcoded game cards
-const gameData = [
+  dataArray.forEach(g => {
+    const card = document.createElement("game-card");
+    for (const key in g) {
+      card.setAttribute(key, g[key]);
+    }
+    container.appendChild(card);
+  });
+}
+
+
+// Local Data
+const defaultLocalData = [
   {
     title: "Kingdom Come: Deliverance II",
     img: "images/kcd2.jpg",
@@ -301,30 +275,31 @@ const gameData = [
     desc: "A dystopian open-world adventure with strong gameplay, emotional storytelling, and breathtaking worldbuilding.",
     rating: "★★★★★",
     link: "https://www.cyberpunk.net/"
-  },
-  {
-    title: "Darkest Dungeon",
-    img: "images/darkest.jpg",
-    alt: "Crusader and party fighting eldritch horrors.",
-    genre: "Roguelike RPG",
-    desc: "A gothic turn-based descent into madness with brutal difficulty and near-infinite replayability.",
-    rating: "★★★★☆",
-    link: "https://www.darkestdungeon.com/"
   }
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector("#game-card-list");
+// Save local dataset if missing
+if (!localStorage.getItem("gameDataLocal")) {
+  localStorage.setItem("gameDataLocal", JSON.stringify(defaultLocalData));
+}
 
-  gameData.forEach(g => {
-    const card = document.createElement("game-card");
-    card.setAttribute("title", g.title);
-    card.setAttribute("img", g.img);
-    card.setAttribute("alt", g.alt);
-    card.setAttribute("genre", g.genre);
-    card.setAttribute("desc", g.desc);
-    card.setAttribute("rating", g.rating);
-    card.setAttribute("link", g.link);
-    container.appendChild(card);
+
+// Load Button Handlers
+document.addEventListener("DOMContentLoaded", () => {
+  // local
+  document.querySelector("#loadLocal").addEventListener("click", () => {
+    const localData = JSON.parse(localStorage.getItem("gameDataLocal"));
+    populateCards(localData);
+  });
+
+  // remote
+  document.querySelector("#loadRemote").addEventListener("click", async () => {
+    try {
+      const response = await fetch("https://my-json-server.typicode.com/atran032/cse134-portfolio-data/games");
+      const remoteData = await response.json();
+      populateCards(remoteData);
+    } catch (err) {
+      console.error("Remote fetch failed:", err);
+    }
   });
 });
