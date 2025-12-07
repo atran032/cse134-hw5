@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Hobbies (CRUD)</title>
+  <script>
+    /* Load saved theme before paint */
+    (function() {
+      let saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <console-frame>
+    <header class="console-top">
+      <red-led></red-led>
+      <h1><small>Anthony's</small> GAME LAD</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="education.html">Career</a></li>
+          <li><a href="hobbies.html">Hobbies</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="crud.html" class="active">CRUD</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="screen crud-screen">
+    </main>
+
+    <footer class="console-bottom">
+      <d-pad><div class="center"></div></d-pad>
+      <speaker-grate></speaker-grate>
+
+      <ab-cluster>
+        <toggle-btn id="theme-toggle" class="btn-a"></toggle-btn>
+        <toggle-btn class="btn-b"></toggle-btn>
+      </ab-cluster>
+
+      <p class="home-link"><a href="index.html">Back to Home</a></p>
+    </footer>
+
+  </console-frame>
+  
+  <script src="js/script.js" defer></script>
+  <script src="js/crud.js" defer></script>
+</body>
+</html>
